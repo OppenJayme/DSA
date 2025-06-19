@@ -12,8 +12,8 @@ int *p = malloc(sizeof(int)); // allocates memory for an int
 # What i Think Always
 
 If the structure is a pointer to a structure type:
-typedef struct node {
-} *structureType
+(```c)typedef struct node {
+} *structureType(```)
 
 Its syntax will always be ->
 and if you are NOT pointing to a structure type:
