@@ -14,6 +14,7 @@ typedef struct {
 void init(List_three *list);
 void insert(List_three *list, int data);
 void read(List_three list);
+void delete(List_three *list, int data);
 
 int main(){
     List_three list;
@@ -24,6 +25,9 @@ int main(){
     insert(&list, 1);
     read(list);
     insert(&list, 2);
+    read(list);
+
+    delete(&list, 2);
     read(list);
 
 
@@ -49,7 +53,17 @@ void read(List_three list){
 void insert(List_three *list, int data){
     if (list->size < MAX){
         list->Elements[list->size++].data = data;
-    
+    }
+}
+
+void delete(List_three *list, int data){
+    int i = 0;
+    for (; i < list->size && list->Elements[i].data != data; ++i){}
+    if (i < list->size){
+        for (++i; i < list->size;++i){
+            list->Elements[i - 1] = list->Elements[i];
+        }
+        list->size--;
     }
 }
 
