@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 typedef struct {
     int data;
@@ -15,6 +16,8 @@ void read(LinkedList List);
 void insertFirst(LinkedList *List, int data);
 void insertLast(LinkedList *List,  int data);
 void deleteData(LinkedList *A, int data);
+int locate(LinkedList A, int data);
+bool findElem(LinkedList A, int data);
 
 int main(){
     LinkedList List;
@@ -27,8 +30,14 @@ int main(){
     read(List);
     insertLast(&List, 130);
     read(List);
-    deleteData(&List, 10);
+    deleteData(&List, 20);
     read(List);
+
+    printf("%d\n", locate(List, 130));
+
+    bool real = findElem(List, 120);
+    printf("1 if found 0 if nah: %d", findElem(List, 100));
+
     
 }
 
@@ -47,7 +56,7 @@ void read(LinkedList List){
 
 void insertFirst(LinkedList *A, int data){
     LinkedList newNode = (LinkedList)malloc(sizeof(struct node));
-    
+
     if (newNode == NULL){
         printf("error!");
         exit;
@@ -83,6 +92,20 @@ void deleteData(LinkedList *A, int data){
         *trav = temp->next;
         free(temp);
     }
+}
+
+int locate(LinkedList A, int data){
+    int index = 0;
+    LinkedList trav;
+
+    for (trav = A; trav && trav->elem.data != data; trav = trav->next, ++index){}
+    return (trav == NULL) ? -1 : index; 
+}
+
+bool findElem(LinkedList A, int data){
+    LinkedList trav;
+    for (trav = A; trav != NULL && trav->elem.data != data; trav = trav->next){}
+    return trav != NULL ? true : false;
 }
 
 
