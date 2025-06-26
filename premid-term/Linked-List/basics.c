@@ -47,6 +47,12 @@ void read(LinkedList List){
 
 void insertFirst(LinkedList *A, int data){
     LinkedList newNode = (LinkedList)malloc(sizeof(struct node));
+    
+    if (newNode == NULL){
+        printf("error!");
+        exit;
+    }
+    
     newNode->elem.data = data;
     newNode->next = *A;
     *A = newNode;
@@ -56,6 +62,12 @@ void insertLast(LinkedList *A, int data){
     LinkedList trav;
     for (trav = *A; trav->next != NULL; trav = trav->next){}
     LinkedList newNode = (LinkedList)malloc(sizeof(struct node));
+
+    if (newNode == NULL){
+        printf("error!");
+        exit;
+    }
+
     newNode->elem.data = data;
     newNode->next = NULL;
     trav->next = newNode;
@@ -63,10 +75,14 @@ void insertLast(LinkedList *A, int data){
 
 void deleteData(LinkedList *A, int data){
     LinkedList *trav = A;
+
     for (; *trav != NULL && (*trav)->elem.data != data; trav =  &(*trav)->next){}
-    LinkedList temp = *trav;
-    *trav = temp->next;
-    free(temp);
+
+    if (*trav != NULL){
+        LinkedList temp = *trav;
+        *trav = temp->next;
+        free(temp);
+    }
 }
 
 
