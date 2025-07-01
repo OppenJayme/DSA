@@ -36,7 +36,7 @@ int main(){
     printf("%d\n", locate(List, 130));
 
     bool real = findElem(List, 120);
-    printf("1 if found 0 if nah: %d", findElem(List, 100));
+    printf("1 if found 0 if nah: %d", findElem(List, 10));
 
     
 }
