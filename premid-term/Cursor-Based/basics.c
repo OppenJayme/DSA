@@ -44,10 +44,6 @@ int main(){
 
     printf("%d", locate(heap, lista, 'U'));
    
-    
-   
-    
-    
 
     return 0;
 }
@@ -65,19 +61,6 @@ void initHeap(Vheap *L){
     L->Nodes[MAX - 1].link = -1;
 }
 
-int allocSpace(Vheap *H){
-    int idx = H->avail; //temp gets the current available address
-    if (idx != -1){ 
-        H->avail = H->Nodes[idx].link;
-    }
-    return idx; 
-}
-void freeVH(Vheap *H, int idx){
-    if (idx >= 0 && idx < MAX){
-        H->Nodes[idx].link = H->avail; // at the index of where link is, assign link to h->avail for the index to be flagged available;
-        H->avail = idx; // assign h->avail to ihe index of the newly allocated space. meaning there will be an available space in that index.
-    }
-}
 void read(Vheap H, LIST L) {
     printf("CB List: ");
 
@@ -114,10 +97,24 @@ void insertLast(Vheap *H, LIST *L, char data){
 void delete(Vheap *H, LIST *L, char data){
     int *curr;
     for (curr = L; *curr != -1 && H->Nodes[*curr].data != data; curr = &H->Nodes[*curr].link){}
-    if (*curr != -1){
-        int temp = *curr;
-        *curr = H->Nodes[*curr].link;
-        freeVH(H, temp);
+        if (*curr != -1){
+            int temp = *curr;
+            *curr = H->Nodes[*curr].link;
+            freeVH(H, temp);
+        }
+}
+
+int allocSpace(Vheap *H){
+    int idx = H->avail; //temp gets the current available address
+    if (idx != -1){ 
+        H->avail = H->Nodes[idx].link;
+    }
+    return idx; 
+}
+void freeVH(Vheap *H, int idx){
+    if (idx >= 0 && idx < MAX){
+        H->Nodes[idx].link = H->avail; // at the index of where link is, assign link to h->avail for the index to be flagged available;
+        H->avail = idx; // assign h->avail to ihe index of the newly allocated space. meaning there will be an available space in that index.
     }
 }
 
