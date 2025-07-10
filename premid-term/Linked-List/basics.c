@@ -30,7 +30,7 @@ int main(){
     read(List);
     insertLast(&List, 130);
     read(List);
-    deleteData(&List, 20);
+    deleteData(&List, 10);
     read(List);
 
     printf("%d\n", locate(List, 130));

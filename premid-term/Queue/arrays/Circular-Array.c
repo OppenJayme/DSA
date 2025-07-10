@@ -21,8 +21,12 @@ char front(queue Q);
 int main(){
     queue q;
 
+    initqueue(&q);
+
     printf("%d\n", isEmpty(q));
     enqueue(&q, 'U');
+    display(q);
+    enqueue(&q, 'S');
     display(q);
 
 
@@ -57,14 +61,14 @@ char front(queue Q){
 }
 void enqueue(queue *q, char data){
     if (!isFull(*q)){
-        q->rear = (q->rear + 1) % (MAX);
+        q->rear = (q->rear + 1) % (MAX); // 
         q->data[q->rear] = data;
     }
 }
 
 void dequeue(queue *q){
     if (!isEmpty(*q)){
-        q->front = (q->front + 1) % (MAX);
+        q->front = (q->front + 1) % (MAX); // 1 index ahead of front to delete front.
     }
 }
 

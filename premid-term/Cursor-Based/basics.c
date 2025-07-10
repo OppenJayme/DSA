@@ -15,14 +15,15 @@ typedef struct {
 
 typedef int LIST;
 
-void initList(LIST *VH);
-void read(Vheap H, LIST L);
-void initHeap(Vheap *L);
-void freeVH(Vheap *H, int idx);
+void initList(LIST *VH); //initalizes list for a value/null
+void read(Vheap H, LIST L); // display
+void initHeap(Vheap *L); // initializes the vheap and link to the next node/indexs
+void freeVH(Vheap *H, int idx); // unlinkes trhe specific index/
 void insertFirst(Vheap *H, LIST *L, char data);
 void insertLast(Vheap *H, LIST *L, char data);
 
-void delete(Vheap *H, LIST *L, char data);
+int allocSpace(Vheap *H); //returns the index of the available node and sets the avail to the next available node uising link/
+void delete(Vheap *H, LIST *L, char data); // deletes the node.
 bool locate(Vheap H, LIST L, char data);
 
 int main(){
@@ -84,14 +85,14 @@ void insertFirst(Vheap *H, LIST *L, char data){
 }
 
 void insertLast(Vheap *H, LIST *L, char data){
-    int newNode = allocSpace(H);
+    int newNode = allocSpace(H); // finds index to where to insert
     if (newNode != -1){
-        int *curr;
-        for (curr = L; *curr != -1; curr = &(H->Nodes[*curr].link)){}
-        H->Nodes[newNode].data = data;
-        H->Nodes[newNode].link = -1;
-        *curr = newNode;
-}
+        int *curr; // assigns it to List
+        for (curr = L; *curr != -1; curr = &(H->Nodes[*curr].link)){} // if curr is not the end of the list then next
+        H->Nodes[newNode].data = data; // assign data on the avail spot
+        H->Nodes[newNode].link = -1; // assign -1 on the link of the avail spot because its the last to be inserted.
+        *curr = newNode; // the previous -1 will be overwritten by the index of where data will be inserted.
+    }
 }
 
 void delete(Vheap *H, LIST *L, char data){

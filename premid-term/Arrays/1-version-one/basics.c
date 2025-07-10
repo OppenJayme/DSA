@@ -67,20 +67,4 @@ void delete(list_one *myList, int data){
          }
         myList->size--; // removes the last ({2,2} becomes 2 now). 
     }
-    // insights for me, this is crazy and i have never thought of it like this. this is what makes it beautiful.
-    
-    // ---------------------------------------------------------------------
-
-    // 3 or more numbers lets say {1,2,3,4} and we delete 3
-    //int i = 0;
-
-    //for (; i < myList->size && myList->Elements[i].data != data; ++i) {} // note: i is the index of the number to be deleted
-
-    //if (i != myList->size){ // conditional 
-    //    for (++i; i <= myList->size; ++i){ // adds 1 to i(2+1 = 3, number infront of number to be deleted), then executes code below, then adds + 1 to i (3+1 = 4) 
-   //         myList->Elements[i - 1] = myList->Elements[i]; // i turns index 2 (number 3) to the value of index 3 (number 4) (so 3 is now 4 {1,2,4,4})). 
-                                                            // goes back up i = 4 (index 4) now. executes code again below the for expression. So now {1,2,4,4} 
-        // }
-      //  myList->size--; // removes the last ({1,2,4}). 
-    //}
 }
