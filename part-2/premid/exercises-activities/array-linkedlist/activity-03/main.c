@@ -42,7 +42,7 @@ typedef struct {
 
 typedef struct cell{
      studtype stud;
-    struct cell *Link
+    struct cell *Link;
 } *LinkList;
 
 // array Implementation
@@ -51,7 +51,7 @@ void insertLastArr(ArrayList *A, studtype student);
 void insertLastUniqueArr(ArrayList *A, studtype student);
 void insertAtPositionArr(ArrayList *A, studtype student, int position);
 studtype deleteElemArr(ArrayList *A, studtype student, char id[]);
-void seperateCourseArr(ArrayList *A, studtype student);
+ArrayList separateCourseArr(ArrayList *A, char course[]);
 
 //LinkedList Implemnetation
 
@@ -59,8 +59,8 @@ void insertFirstLL(LinkList *A, studtype student);
 void insertLastLL(LinkList *A, studtype student);
 void insertLastUniqueLL(LinkList *A, studtype student);
 void insertAtPositionLL(LinkList *A, studtype student, int position);
-void deleteElemLL(LinkList *A, studtype student);
-void seperateCourseLL(LinkList *A, studtype student);
+studtype deleteElemLL(LinkList *A, studtype student, char id[]);
+LinkList seperateCourseLL(LinkList *A, char course[]);
 
 
 // helper
@@ -140,7 +140,7 @@ studtype deleteElemArr(ArrayList *A, studtype student, char id[]) {
     for (; i < A->count && strcmp(A->studs[i].ID, id) != 0; ++i) {}
 
     studtype result = (i < A->count) ? A->studs[i]
-                                     : (studtype){"XXXXX", {'X',"XXXXX",'X'}, 0};
+                                     : (studtype){"XXXXX", {'X',"XXXXX",'X'}, "XXX", 0};
 
     if (i < A->count) {
         for (int j = i; j < A->count - 1; ++j)
@@ -151,7 +151,7 @@ studtype deleteElemArr(ArrayList *A, studtype student, char id[]) {
 }
 //6) separateCourse(). The function will remove from the given list all elements bearing the given course and put 
 //them in a new list which will be returned to the calling function.
-ArrayList seperateCourseArr(ArrayList *A, char course[]){
+ArrayList separateCourseArr(ArrayList *A, char course[]){
     ArrayList newList;
     newList.count = 0;
     int i = 0;
@@ -162,8 +162,9 @@ ArrayList seperateCourseArr(ArrayList *A, char course[]){
                 newList.studs[newList.count++] = A->studs[i];
                 for (int j = i; j < A->count - 1; ++j){
                     A->studs[j] = A->studs[j + 1];
-                    A->count--;
                 }
+                A->count--;
+                i--; //re checker the current index since the list has been shifted, current index might be the same course as last.
             }
         }
     }
@@ -171,6 +172,128 @@ ArrayList seperateCourseArr(ArrayList *A, char course[]){
     
 }
 
+void insertFirstLL(LinkList *A, studtype student){
+    LinkList newNode = (LinkList)malloc(sizeof(struct cell));
+
+    if (newNode == NULL){
+        printf("FAIL!");
+    }
+
+    newNode->stud = student;
+    newNode->Link = *A;
+    *A = newNode;
+}
+void insertLastLL(LinkList *A, studtype student){
+    LinkList newNode = (LinkList)malloc(sizeof(struct cell));
+    if (newNode == NULL){
+        printf("FAIL!");
+    }
+
+    newNode->stud = student;
+    newNode->Link = NULL;
+
+    if (*A == NULL){
+        *A = newNode;
+    } else {
+        LinkList trav;
+        for (trav = *A; trav != NULL; trav = trav->Link){}
+        trav->Link = newNode;
+    }
+}
+void insertLastUniqueLL(LinkList *A, studtype student){
+    LinkList newNode = (LinkList)malloc(sizeof(struct cell));
+    if (newNode == NULL){
+        printf("FAIL!");
+    }
+
+    newNode->stud = student;
+    newNode->Link = NULL;
+
+    if (*A == NULL){
+        *A = newNode;
+    } else {
+        LinkList trav, tail = NULL;
+        int found = 0;
+        for (trav = *A; trav != NULL; trav = trav->Link){
+            if (strcmp(trav->stud.ID, student.ID) == 0){
+                found = 1;
+                trav = tail;
+                trav = trav->Link;
+            } 
+        }
+        if (!found){
+            trav->Link = newNode;
+        } else {
+            printf("duplicate");
+            free(newNode);
+        }
+    }
+}
+void insertAtPositionLL(LinkList *A, studtype student, int position){
+    LinkList newNode = (LinkList)malloc(sizeof(struct cell));
+    if (newNode == NULL){
+        printf("FAIL!");
+    }
+
+    newNode->stud = student;
+    newNode->Link = NULL;
+
+    if (position == 0){
+        newNode->Link = *A;
+        *A = newNode;
+    } else {
+        LinkList trav = *A;
+        int i = 0;
+        for (i; trav != NULL && i < position - 1; trav = trav->Link, ++i){}
+        if (trav != NULL){
+            newNode->Link = trav->Link;
+            trav->Link = newNode;
+        } else {
+            free(newNode);
+        }
+    }
+}
+/*5) deleteElem(). The function will delete the element bearing the given ID in the given list. In addition, the 
+deleted element will be returned to the calling function. If no element is deleted, a dummy variable is returned 
+to the calling function containing “XXXXX”, ‘X, and 0 (zero) for string, char, and integer fields respectively.
+*/
+studtype deleteElemLL(LinkList *A, studtype student, const char id[]) {
+    
+    studtype result = (studtype){
+        .ID = "XXXXX",
+        .name = { .FN = "XXXXX", .MI = 'X', .LN = "XXXXX" },
+        .course = "XXXXX",
+        .yrlevel = 0
+    };
+
+   
+    for (; *A != NULL && strcmp((*A)->stud.ID, id) != 0; A = &(*A)->Link) {}
+
+    if (*A != NULL) {               // found: delete this node
+        LinkList temp = *A;
+        result = temp->stud;        // return the deleted element
+        *A = temp->Link;            // unlink
+        free(temp);
+    }
+    return result;                  // single return
+}
+//6) separateCourse(). The function will remove from the given list all elements bearing the given course and put 
+//them in a new list which will be returned to the calling function.
+void seperateCourseLL(LinkList *A, char course[]){
+    LinkList newList;
+    LinkList trav;
+
+    for (trav = *A; trav != NULL; trav = trav->Link){
+        if (strcmp(trav->stud.course, course) == 0){
+            LinkList temp = trav;
+            trav = temp->Link;
+            temp->Link = NULL;
+            
+            
+        }
+    }
+    return newList;
+}
 void initArrList(ArrayList *A){
     A->count = 0;
 }
