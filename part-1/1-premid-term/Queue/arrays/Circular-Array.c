@@ -53,7 +53,6 @@ void display(queue Q){
 
 char front(queue Q){
     char q = '\0';
-
     if (!isEmpty(Q)){
         q = Q.data[Q.front];
     }
