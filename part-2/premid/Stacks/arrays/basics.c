@@ -5,8 +5,10 @@
 
 typedef struct {
     int Elem[MAX];
-    int top;
+    int top; //represents the index of the TOP element
 } Stack;
+
+
 
 // Function prototypes
 void initStack(Stack *s);
