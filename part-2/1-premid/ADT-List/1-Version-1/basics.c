@@ -26,7 +26,7 @@ void deleteFirstOcc(List *L, int data);
 void deleteAll(List *L);
 int countOccurences(List L);
 void insertAtPosition(List *L, int data, int position);
-void deleteAtPosition(List *L);
+void deleteAtPosition(List *L, int position);
 
 //add new functions that arent used by the functions above
 bool isEmpty(List L);
@@ -43,12 +43,24 @@ int main(){
     display(Otin);
     insertFirst(&Otin, 20);
     display(Otin);
+
+    printf("\nInserting at Position 1 (%d)! with element 30: ", Otin.Elements[1].data);
     insertAtPosition(&Otin, 30, 1);
+    printf("\n");
     display(Otin);
+
     insertSorted(&Otin, 25);
     display(Otin);
-    insertLast(&Otin, 5);
+    insertLast(&Otin, 5); 
     display(Otin);
+
+
+    printf("\nDeleting Position 2 (%d)!: \n", Otin.Elements[2].data);
+    deleteAtPosition(&Otin, 2);
+    display(Otin);
+    printf("\n");
+
+
     insertLast(&Otin, 1);
     display(Otin);
 
@@ -173,5 +185,19 @@ void insertAtPosition(List *L, int data, int position){
         }
         L->Elements[position].data = data;
         L->size++;
+    }
+}
+
+void deleteAtPosition(List *L,int position){
+    if (position > L->size || position < 0){
+        printf("invalid index!\n");
+        return;
+    }
+
+    if (!isFull(*L)){
+        for (int i = position; i < L->size - 1; ++i){
+            L->Elements[i].data = L->Elements[i + 1].data;
+        }
+        L->size--;
     }
 }
