@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #define MAX 10
 
 typedef struct {
@@ -20,6 +21,17 @@ int findElem(List L, int data);
 void insertSorted(List *L, int data);
 void display(List);
 void deleteFirstOcc(List *L, int data);
+
+//additionals
+void deleteAll(List *L);
+int countOccurences(List L);
+void insertAtPosition(List *L, int data);
+void deleteAtPosition(List *L);
+
+//add new functions that arent used by the functions above
+bool isEmpty(List L);
+bool isFull(List L);
+
 
 
 int main(){
@@ -126,4 +138,12 @@ void deleteFirstOcc(List *L, int data){
             printf("%d not found.\n", data);
         }
     }
+}
+
+bool isEmpty(List L){
+    return (L.size == 0) ? true : false;
+}
+
+bool isFull(List L){
+    return (L.size == MAX) ? true : false;
 }
