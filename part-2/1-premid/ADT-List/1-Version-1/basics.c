@@ -58,6 +58,10 @@ int main(){
     deleteLast(&Otin);
     display(Otin);
 
+    printf("Dleteing All\n");
+    deleteAll(&Otin);
+    display(Otin);
+
     int found = findElem(Otin, 100);
     printf("Found Element: %d.", found);
     return 0;
@@ -146,4 +150,9 @@ bool isEmpty(List L){
 
 bool isFull(List L){
     return (L.size == MAX) ? true : false;
+}
+
+void deleteAll(List *L){
+    L->size = 0;
+    printf("Deleted All!\n");
 }
