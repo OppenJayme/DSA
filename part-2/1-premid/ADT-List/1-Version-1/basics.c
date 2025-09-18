@@ -19,6 +19,7 @@ void deleteLast(List *L);
 int findElem(List L, int data);
 void insertSorted(List *L, int data);
 void display(List);
+void deleteFirstOcc(List *L, int data);
 
 
 int main(){
@@ -35,6 +36,10 @@ int main(){
     insertLast(&Otin, 5);
     display(Otin);
     insertLast(&Otin, 1);
+    display(Otin);
+
+
+    deleteFirstOcc(&Otin, 0);
     display(Otin);
     deleteFirst(&Otin);
     display(Otin);
@@ -104,5 +109,21 @@ void insertSorted(List *L, int data){
         L->Elements[i + 1].data = L->Elements[i].data;
         }
     L->Elements[pos].data = data;
+    }
+}
+
+void deleteFirstOcc(List *L, int data){
+    if (L->size > 0){
+        int pos, i;
+        for (pos = 0; pos < L->size && L->Elements[pos].data != data; ++pos){}
+
+        if (pos != L->size){
+            for (i = pos; i < L->size - 1; ++i){
+                L->Elements[i].data = L->Elements[i + 1].data;
+            }
+            L->size--;
+        } else {
+            printf("%d not found.\n", data);
+        }
     }
 }
