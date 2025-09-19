@@ -3,3 +3,5 @@
 !*.*
 .vscode
 *.exe
+# Ignore only Code Runner temp file
+tempcoderunnerfile.c
