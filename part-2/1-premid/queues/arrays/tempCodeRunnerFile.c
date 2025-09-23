@@ -1,2 +1,2 @@
-
-    }
+ dequeue(&q);
+    display(q);

@@ -1,10 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 typedef struct node{
     int data;
     struct node *link;
 } *LIST;
+
+typedef enum {TRUE, FALSE} Boolean; // first that goes in the paramenters eg. TRUE will be assigned 0, the next 1 and so on
 
 LIST getEven(LIST L);
 void insertFirst(LIST *L, int new);
@@ -13,6 +16,7 @@ void display(LIST L);
 LIST getEven(LIST L);
 LIST getEvenNoFunctions(LIST L);
 int getCount(LIST L);
+Boolean findElem(LIST L, int find);
 
 int main(){
     LIST real;
@@ -41,7 +45,10 @@ int main(){
     display(newEven);
 
     int count = getCount(real);
-    printf("There are %d numbers that are divisible by 6", count);
+    printf("There are %d numbers that are divisible by 6\n", count);
+
+    Boolean isFound = findElem(real, 99);
+    printf("%s",(isFound == 0) ? "99 is an element!" : "Not there");
 
     return 0;
 }
@@ -110,5 +117,11 @@ int getCount(LIST L){// counts how many are divisible by 6
         }
     }
     return x;
+}
+
+//Exercise 3
+Boolean findElem(LIST L, int find){
+    for (L; L != NULL && L->data != find; L = L->link){}
+    return (L != NULL) ? TRUE : FALSE;
 }
 

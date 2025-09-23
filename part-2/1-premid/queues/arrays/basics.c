@@ -75,8 +75,8 @@ void display(queue q){
     }
 
     while (!isEmpty(q)){
-        printf("%d", q.data[q.front]);
-        dequeue(&q);
+        printf("%d", q.data[q.front]); // prints the front
+        dequeue(&q); // since we dequeue the front gets move up to one more index.
         printf("%s", (!isEmpty(q)) ? ", " : ".\n");
     }
 }
