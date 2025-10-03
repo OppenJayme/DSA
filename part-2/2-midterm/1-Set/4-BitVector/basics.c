@@ -82,5 +82,5 @@ SET *Difference(SET A, SET B){
             (*C)[i]= A[i] & ~(B[i]);
         }
     }
-    return C;
+    return C; 
 }

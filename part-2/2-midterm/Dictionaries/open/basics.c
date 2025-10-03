@@ -15,19 +15,24 @@ int hashF(int elem);
 void insertElem(Dic D, int x);
 void display(Dic D);
 bool isMember(Dic D, int x);
+void deleteElem(Dic D, int x);
 
 int main(){
     Dic D = {};
     
     initDictionary(D);
-    insertElem(D, 10);
-    insertElem(D, 31);
-    insertElem(D, 40);
+    iinsertElem(D, 40);
     insertElem(D, 50);
     insertElem(D, 23);
     insertElem(D, 11);
     insertElem(D, 1234);
     insertElem(D, 12);
+    insertElem(D, 122);
+    insertElem(D, 31);
+    
+    display(D);
+
+    deleteElem(D, 23);
     display(D);
 
     bool findElem = isMember(D, 22);
@@ -88,4 +93,18 @@ bool isMember(Dic D, int x){
     NodeType trav;
     for (trav = D[key]; trav != NULL && trav->data != x; trav = trav->link){};
     return (trav != NULL) ? true : false;
+}
+
+void deleteElem(Dic D, int x){
+    int key = hashF(x);
+    NodeType *trav;
+    for (trav = &D[key]; *trav != NULL && (*trav)->data != x; trav = &(*trav)->link){}
+    if (*trav != NULL) {
+        NodeType temp;
+        temp = *trav;
+        *trav = temp->link;
+        free(temp);
+    } else {
+        printf("Out of bounds!\n");
+    }
 }

@@ -8,7 +8,7 @@ typedef unsigned char SET; // only contains 8 bits of data
 void initSet(SET *A);
 void display(SET A, char name[]);
 void insert(SET *A, int x);
-void delete(SET *A, int x);
+void Delete(SET *A, int x);
 SET Union(SET A, SET B);
 SET Intersection(SET A, SET B);
 SET difference(SET A, SET B);
@@ -65,7 +65,7 @@ void insert(SET *A, int x){
     }
 }
 
-void delete(SET *A, int x){
+void Delete(SET *A, int x){
      if (x < 8){
         *A &= ~(1 << x); // shift 1 by x elements then compliment 
                          // example 
