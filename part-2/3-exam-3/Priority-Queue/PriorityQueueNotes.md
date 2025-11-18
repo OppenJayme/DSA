@@ -18,6 +18,6 @@ When removing the top priority element (the root):
 2. Remove the last element (which was the root).
 3. Then “bubble down” or “heapify down”:
 - Compare the new root with its children.
-- In a Max Heap, if a child is larger, swap with the larger child.
+- In a Max Heap, if a child is larger,wb swap with the larger child.
 - Continue until no violations remain.
 🧠 Think of it as the root “sinking down” until it’s correctly placed.

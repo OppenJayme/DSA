@@ -21,7 +21,7 @@ int main(){
     Dic D = {};
     
     initDictionary(D);
-    iinsertElem(D, 40);
+    insertElem(D, 40);
     insertElem(D, 50);
     insertElem(D, 23);
     insertElem(D, 11);
@@ -29,9 +29,13 @@ int main(){
     insertElem(D, 12);
     insertElem(D, 122);
     insertElem(D, 31);
+    insertElem(D, 11);
+    
+    
     
     display(D);
 
+    printf("\n");
     deleteElem(D, 23);
     display(D);
 
@@ -66,6 +70,7 @@ void insertElem(Dic D, int x){
     if (*trav == NULL){ // meaning we have reached the end and no duplicate found.
         NodeType newNode = (NodeType)malloc(sizeof(struct node));
         if (newNode != NULL){ // you can insert at front or can insertLast by *trav!;
+                              // in this case insertfirst for faster;
             newNode->data = x;
             newNode->link = D[key];
             D[key] = newNode;
@@ -98,8 +103,10 @@ bool isMember(Dic D, int x){
 void deleteElem(Dic D, int x){
     int key = hashF(x);
     NodeType *trav;
-    for (trav = &D[key]; *trav != NULL && (*trav)->data != x; trav = &(*trav)->link){}
-    if (*trav != NULL) {
+
+    for (trav = &D[key]; *trav != NULL && (*trav)->data != x; trav = &(*trav)->link){} // look for the elem to delete the node behind it (elem to delete) will be used to delete the node next to it (elem to delete)
+
+    if (*trav != NULL) { 
         NodeType temp;
         temp = *trav;
         *trav = temp->link;
@@ -108,3 +115,12 @@ void deleteElem(Dic D, int x){
         printf("Out of bounds!\n");
     }
 }
+
+// to draw this its like this say we deelte 4
+// 1 -> 3  -> 4  -> 2
+//      |
+// where *trav is at we can access 4 through *trav
+
+// we create a new temp to point to 4 using *trav (so now temp is pointing at 4)
+// and we point 3 to 2
+// and free 4

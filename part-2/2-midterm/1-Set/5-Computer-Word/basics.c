@@ -57,7 +57,7 @@ void initSet(SET *A){
 
 void insert(SET *A, int x){
     if (x < 8){
-        *A |= (1 << x ); // shift 1 by x elements
+        *A |= (1 << x - 1); // shift 1 by x elements
                          // example 
                          // 3 to be inserted, 3 is 0000 0011, 1 is 0000 0001
                          // (1 << 3) = 0000 1000 which is basically 2^3 
@@ -67,7 +67,7 @@ void insert(SET *A, int x){
 
 void Delete(SET *A, int x){
      if (x < 8){
-        *A &= ~(1 << x); // shift 1 by x elements then compliment 
+        *A &= ~(1 << x - 1); // shift 1 by x elements then compliment 
                          // example 
                          // 
                          // *A = *A | ~(1 << x);

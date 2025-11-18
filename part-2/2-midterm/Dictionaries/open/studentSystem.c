@@ -83,7 +83,7 @@ void initDictionary(Dic D){
 
 
 int hashF(int id) {
-    int firstTwo = (id / 1000000) % 100;   // e.g., 23101234 → 23
+    int firstTwo = (id / 1000000) % 100;   // e.g., 23101234 → 23 
     return firstTwo % MAX;        
 }
 
